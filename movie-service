@@ -1,10 +1,27 @@
+package com.netflix.ratings;
 
-FROM eclipse-temurin:17-jdk-alpine
-WORKDIR /app
-COPY build.gradle gradlew ./
-COPY gradle ./gradle
-RUN chmod +x gradlew
-RUN ./gradlew build -x test
-COPY . .
-EXPOSE 8080
-CMD ["java","-jar","build/libs/movies-1.0.0.jar"]
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+@SpringBootApplication
+@RestController
+@RequestMapping("/ratings")
+public class RatingsApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(RatingsApplication.class, args);
+    }
+
+    @GetMapping
+    public Map<String, Double> getRatings() {
+        return Map.of(
+            "The Matrix", 4.8,
+            "Inception", 4.7,
+            "The Dark Knight", 4.9,
+            "Avengers", 4.6
+        );
+    }
+}
