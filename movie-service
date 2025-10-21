@@ -1,22 +1,19 @@
-package com.netflix.movies;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-@SpringBootApplication
-@RestController
-@RequestMapping("/movies")
-public class MoviesApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(MoviesApplication.class, args);
-    }
-
-    @GetMapping
-    public List<String> getMovies() {
-        return List.of("The Matrix", "Inception", "The Dark Knight", "Avengers");
-    }
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.3'
+    id 'io.spring.dependency-management' version '1.1.3'
 }
+
+group = 'com.netflix'
+version = '1.0.0'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
