@@ -1,22 +1,10 @@
-package com.netflix.movies;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-@SpringBootApplication
-@RestController
-@RequestMapping("/movies")
-public class MoviesApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(MoviesApplication.class, args);
-    }
-
-    @GetMapping
-    public List<String> getMovies() {
-        return List.of("The Matrix", "Inception", "The Dark Knight", "Avengers");
-    }
-}
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
+COPY build.gradle gradlew ./
+COPY gradle ./gradle
+RUN chmod +x gradlew
+RUN ./gradlew build -x test
+COPY . .
+EXPOSE 8080
+CMD ["java","-jar","build/libs/movies-1.0.0.jar"]
